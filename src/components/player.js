@@ -80,10 +80,13 @@ export default function Player(props) {
         //actions
         sound.play();
         //animate drumPads
-        drumPadSelector.style.animation = `drumPadHighlight ${animationDuration}s alternate ease-in-out 2`;
-        drumPadSelector.addEventListener("animationend", function () {
-          this.style.animation = "";
-        });
+        //disable animation on mobile devices
+        if (window.innerWidth > 640) {
+          drumPadSelector.style.animation = `drumPadHighlight ${animationDuration}s alternate ease-in-out 2`;
+          drumPadSelector.addEventListener("animationend", function () {
+            this.style.animation = "";
+          });
+        }
       }
     });
     if (index < blocksExperimental.length - 1) {

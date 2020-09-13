@@ -203,20 +203,22 @@ body {
       font-size: 3em;
       font-weight: bold;
     }
-    .tempo-input {
-      font-family: "Audiowide", cursive;
-      background: rgba(255, 255, 255, 0.178);
-      border-radius: 12px 12px 1px 1px;
-      padding: 8px;
-      color: white;
-      outline: none;
-      border: none;
-      font-size: 1.5em;
-      line-height: 1.5em;
-      text-align: center;
-      border-bottom: 2px solid white;
-      width: 80%;
-      max-width: 120px;
+    .tempo {
+      .tempo-input {
+        font-family: "Audiowide", cursive;
+        background: rgba(255, 255, 255, 0.178);
+        border-radius: 12px 12px 1px 1px;
+        padding: 8px;
+        color: white;
+        outline: none;
+        border: none;
+        font-size: 1.5em;
+        line-height: 1.5em;
+        text-align: center;
+        border-bottom: 2px solid white;
+        width: 80%;
+        max-width: 120px;
+      }
     }
     .drum-select {
       background: none;
@@ -370,33 +372,37 @@ input[type="number"] {
   transition: 0.2s;
 }
 
-@media handheld and (max-width: 900px) and (orientation: landscape) {
-  body {
-    overflow: scroll;
-    margin: 0;
-    padding: 0;
-  }
+// @media (max-width: 900px) and (orientation: landscape) {
+//   body {
+//     overflow: scroll;
+//     margin: 0;
+//     padding: 0;
+//   }
 
-  .main {
-    padding: 0;
-    margin: 0;
-  }
+//   .main {
+//     padding: 0;
+//     margin: 0;
+//     overflow: scroll;
+//   }
 
-  .player-container {
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-  }
-  .drumset {
-    height: 80vh;
-    width: 100vw;
-  }
-}
+//   .player-container {
+//     border: 2px solid red;
+//     height: 100vh;
+//     width: 100vw;
+//     margin: 0;
+//   }
+//   .drumset {
+//     height: 80vh;
+//     width: 100vw;
+//     overflow: visible;
+//   }
+// }
 
 @media (max-width: 768px) {
   .main {
     height: 100vh;
     margin: 0;
+    overflow: scroll;
   }
   .player-container {
     flex-direction: column;
@@ -414,6 +420,21 @@ input[type="number"] {
       width: 100%;
       justify-content: space-around;
       padding: 10px;
+      .tempo {
+        // width: 300px;
+        padding: 0 10px;
+        .tempo-input {
+          background-color: unset;
+          font-size: 1.8em;
+        }
+        .tempo-header {
+          display: none;
+        }
+        .tempo-units {
+          display: inline;
+          font-size: 1.5em;
+        }
+      }
     }
     .player {
       flex-basis: 1;
@@ -425,11 +446,29 @@ input[type="number"] {
   .drumset {
     max-width: unset;
     width: 100%;
-    margin: 0;
+    padding: 5px;
     height: 40vh;
   }
 }
 @media (max-width: 640px) {
+  .player-container {
+    .info-area {
+      padding: 0;
+      .tempo {
+        background-color: rgb(43, 43, 43);
+        flex-grow: auto;
+        .tempo-input {
+          border-bottom: unset;
+          min-width: 0;
+          padding: 0;
+          max-width: 80px;
+        }
+      }
+      .notation {
+        font-size: 2.2em;
+      }
+    }
+  }
   .drumset {
     display: grid;
     grid-gap: 10px;
@@ -487,15 +526,7 @@ input[type="number"] {
     }
   }
 }
-@keyframes playHighlight {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.05);
-    background: rgba(255, 255, 255, 0.329);
-  }
-}
+
 @keyframes drumPadHighlight {
   to {
     transform: scale(1.02);
