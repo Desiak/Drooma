@@ -93,6 +93,29 @@ export default function Player(props) {
       index++;
       //return to the first block after screening throught the last one
     } else index = 0;
+    if (index === 1) {
+      const playbackSpeed = (30 / speed) * 1000;
+
+      blockInMotion = document.querySelector(".motion");
+      //75 because thats the hardcoded value of a single block
+      const transformValue = blocksExperimental.length * 75;
+      setAnimation(
+        blockInMotion.animate(
+          [
+            {
+              transform: "translateX(0px)",
+            },
+            {
+              transform: `translate(-${transformValue}px)`,
+            },
+          ],
+          {
+            duration: playbackSpeed * blocksExperimental.length,
+            iterations: 1,
+          }
+        )
+      );
+    }
   };
 
   const Start = (e) => {
@@ -108,25 +131,25 @@ export default function Player(props) {
         const playbackSpeed = (30 / speed) * 1000;
 
         //animateblocksmovement
-        blockInMotion = document.querySelector(".motion");
-        //75 because thats the hardcoded value of a single block
-        const transformValue = blocksExperimental.length * 75;
-        setAnimation(
-          blockInMotion.animate(
-            [
-              {
-                transform: "translateX(0px)",
-              },
-              {
-                transform: `translate(-${transformValue}px)`,
-              },
-            ],
-            {
-              duration: playbackSpeed * blocksExperimental.length,
-              iterations: Infinity,
-            }
-          )
-        );
+        // blockInMotion = document.querySelector(".motion");
+        // //75 because thats the hardcoded value of a single block
+        // const transformValue = blocksExperimental.length * 75;
+        // setAnimation(
+        //   blockInMotion.animate(
+        //     [
+        //       {
+        //         transform: "translateX(0px)",
+        //       },
+        //       {
+        //         transform: `translate(-${transformValue}px)`,
+        //       },
+        //     ],
+        //     {
+        //       duration: playbackSpeed * blocksExperimental.length,
+        //       iterations: Infinity,
+        //     }
+        //   )
+        // );
         setIsPlaying(
           setInterval(() => {
             LoopOverEachSound();
