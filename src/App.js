@@ -136,7 +136,6 @@ class App extends Component {
         isTrackActive: [false, false, false, false, false, false, true, false],
       },
     ],
-    interval: 100,
     isPlaying: false,
     loop: null,
     currentlyInEditMode: 0,
@@ -281,7 +280,7 @@ class App extends Component {
     }
   };
 
-  addNewBlock = (e) => {
+  addNewBlock = () => {
     const block = {
       isInEditMode: false,
       isTrackActive: [false, false, false, false, false, false, false, false],
@@ -293,7 +292,7 @@ class App extends Component {
     });
   };
 
-  removeLastBlock = (e) => {
+  removeLastBlock = () => {
     const newArray = this.state.blocks.slice(0, this.state.blocks.length - 1);
     this.setState({
       blocks: newArray,
@@ -305,7 +304,6 @@ class App extends Component {
         <div className="main">
           <Player
             allBlocks={this.state.blocks}
-            interval={this.state.interval}
             clearPlayer={this.clearPlayer}
             onBlockClickToggleEditMode={this.onBlockClickToggleEditMode}
             pause={this.pause}

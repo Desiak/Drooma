@@ -299,8 +299,8 @@ body {
   width: auto;
   height: 100%;
   padding: 0;
-  margin-left: 20px;
   overflow: visible;
+  margin-left: 20px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,

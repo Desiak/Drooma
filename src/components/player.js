@@ -7,15 +7,15 @@ export default function Player(props) {
   let blocksExperimental = props.allBlocks;
   let blocksNodes = [];
   let key = 0;
-  let blockInMotion = null;
+  let blocksInMotion = null;
   const [isPlaying, setIsPlaying] = useState(null);
   const [animation, setAnimation] = useState(null);
   const [currentDrumset, setCurrentDrumset] = useState("drumset1");
-  const [speed, setSpeed] = useState(100);
+  const [speed, setSpeed] = useState(150);
   let animationDuration = 10 / speed;
 
   const renderSoundBlocks = () => {
-    //display all soundblocks accordint to state value
+    //display all soundblocks according to state value
     blocksNodes = blocksExperimental.map((block) => {
       key++;
       return (
@@ -69,24 +69,29 @@ export default function Player(props) {
     // //loop over each block, and over each sound and check if should play
     const drumset = document.querySelector(".drumset");
     const allTracksInsideBlock = blocksNodes[index].props.children;
+    const playbackSpeed = (30 / speed) * 1000;
+
     allTracksInsideBlock.forEach((children) => {
       const soundValue = children.props.className.split(" ");
       if (soundValue.length === 1) {
         //selectors
         const sound = new Howl({
-          src: [require(`../drumsets/${currentDrumset}/${soundValue[0]}.wav`)],
+          src: [require(`../drumsets/${currentDrumset}/${soundValue[0]}.mp3`)],
         });
         const drumPadSelector = drumset.querySelector(`.${soundValue[0]}`);
         //actions
-        sound.play();
-        //animate drumPads
-        //disable animation on mobile devices
-        if (window.innerWidth > 640) {
-          drumPadSelector.style.animation = `drumPadHighlight ${animationDuration}s alternate ease-in-out 2`;
-          drumPadSelector.addEventListener("animationend", function () {
-            this.style.animation = "";
-          });
-        }
+        //timeout used to synchronise animation of 'player motion' and sound
+        setTimeout(() => {
+          sound.play();
+          //animate drumPads
+          //enable animation of drumpads only on bigger devices
+          if (window.innerWidth > 640) {
+            drumPadSelector.style.animation = `drumPadHighlight ${animationDuration}s alternate ease-in-out 2`;
+            drumPadSelector.addEventListener("animationend", function () {
+              this.style.animation = "";
+            });
+          }
+        }, playbackSpeed);
       }
     });
     if (index < blocksExperimental.length - 1) {
@@ -94,13 +99,12 @@ export default function Player(props) {
       //return to the first block after screening throught the last one
     } else index = 0;
     if (index === 1) {
-      const playbackSpeed = (30 / speed) * 1000;
-
-      blockInMotion = document.querySelector(".motion");
-      //75 because thats the hardcoded value of a single block
-      const transformValue = blocksExperimental.length * 75;
+      //activate animation when the looper starts
+      blocksInMotion = document.querySelector(".motion");
+      const singleBlockWidth = document.querySelector(".block").clientWidth;
+      const transformValue = blocksExperimental.length * singleBlockWidth;
       setAnimation(
-        blockInMotion.animate(
+        blocksInMotion.animate(
           [
             {
               transform: "translateX(0px)",
@@ -118,7 +122,7 @@ export default function Player(props) {
     }
   };
 
-  const Start = (e) => {
+  const Start = () => {
     //check if speed value is not crazy, like 0 or 1 000 000
     if (speed < 40) {
       setSpeed(40);
@@ -127,29 +131,7 @@ export default function Player(props) {
     } else {
       if (!isPlaying) {
         props.toggleIsPlaying(true);
-
         const playbackSpeed = (30 / speed) * 1000;
-
-        //animateblocksmovement
-        // blockInMotion = document.querySelector(".motion");
-        // //75 because thats the hardcoded value of a single block
-        // const transformValue = blocksExperimental.length * 75;
-        // setAnimation(
-        //   blockInMotion.animate(
-        //     [
-        //       {
-        //         transform: "translateX(0px)",
-        //       },
-        //       {
-        //         transform: `translate(-${transformValue}px)`,
-        //       },
-        //     ],
-        //     {
-        //       duration: playbackSpeed * blocksExperimental.length,
-        //       iterations: Infinity,
-        //     }
-        //   )
-        // );
         setIsPlaying(
           setInterval(() => {
             LoopOverEachSound();
@@ -159,7 +141,7 @@ export default function Player(props) {
     }
   };
 
-  const Pause = (e) => {
+  const Pause = () => {
     index = 0;
     clearInterval(isPlaying);
     setIsPlaying(null);
@@ -221,9 +203,8 @@ export default function Player(props) {
           >
             <option value="drumset1">Acoustic 1</option>
             <option value="drumset2">Acoustic 2</option>
-            <option value="drumset3">Vinyl</option>
-            <option value="drumset4">Electro</option>
-            <option value="drumset5">Electro2</option>
+            <option value="drumset3">Electro 1</option>
+            <option value="drumset4">Electro 2</option>
           </select>
         </div>
       </div>
