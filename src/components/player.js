@@ -1,161 +1,271 @@
-import React, { useState } from "react";
-import { Howl } from "howler";
+import React, { useState, useEffect, useContext } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
+import { StoreContext } from "./StoreProvider";
+import { observer } from "mobx-react";
 
-export default function Player(props) {
+function Player() {
+  const store = useContext(StoreContext);
   let index = 0;
-  let blocksExperimental = props.allBlocks;
-  let blocksNodes = [];
-  let key = 0;
-  let blocksInMotion = null;
   const [isPlaying, setIsPlaying] = useState(null);
-  const [animation, setAnimation] = useState(null);
   const [currentDrumset, setCurrentDrumset] = useState("drumset1");
-  const [speed, setSpeed] = useState(150);
-  let animationDuration = 10 / speed;
+  const [speed, setSpeed] = useState(60);
+  const [beatScheduler, setBeatScheduler] = useState(null);
+  const [blocksInMotion, setBlocksInMotion] = useState(null);
+  const [tracks, setTracks] = useState({
+    crash: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ride: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    hihat: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+    snare: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+    tom1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    tom2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    floor: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    kick: [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+  });
+  const [tracksLength, setTracksLength] = useState(tracks.crash.length);
 
-  const renderSoundBlocks = () => {
-    //display all soundblocks according to state value
-    blocksNodes = blocksExperimental.map((block) => {
-      key++;
-      return (
-        <div
-          className={block.isInEditMode ? "block edit-mode" : "block"}
-          key={key}
-          listid={props.allBlocks.indexOf(block)}
-          onClick={(e) => props.onBlockClickToggleEditMode(e)}
-        >
-          <div className="block-number random-class">
-            <p>{props.allBlocks.indexOf(block) + 1}</p>
-          </div>
-          <div
-            className={block.isTrackActive[0] ? "crash" : "crash empty"}
-            onClick={(e) => props.handleSingleTileClick(e)}
-          ></div>
-          <div
-            className={block.isTrackActive[1] ? "ride" : "ride empty"}
-            onClick={(e) => props.handleSingleTileClick(e)}
-          ></div>
-          <div
-            className={block.isTrackActive[2] ? "hihat" : "hihat empty"}
-            onClick={(e) => props.handleSingleTileClick(e)}
-          ></div>
-          <div
-            className={block.isTrackActive[3] ? "snare" : "snare empty"}
-            onClick={(e) => props.handleSingleTileClick(e)}
-          ></div>
-          <div
-            className={block.isTrackActive[4] ? "tom1" : "tom1 empty"}
-            onClick={(e) => props.handleSingleTileClick(e)}
-          ></div>
-          <div
-            className={block.isTrackActive[5] ? "tom2" : "tom2 empty"}
-            onClick={(e) => props.handleSingleTileClick(e)}
-          ></div>
-          <div
-            className={block.isTrackActive[6] ? "floor-tom" : "floor-tom empty"}
-            onClick={(e) => props.handleSingleTileClick(e)}
-          ></div>
-          <div
-            className={block.isTrackActive[7] ? "kick" : "kick empty"}
-            onClick={(e) => props.handleSingleTileClick(e)}
-          ></div>
-        </div>
-      );
-    });
-  };
+  let singleTrackName;
+  let singleTrackValue;
+  let indexOfCurrentTrack = 0;
 
-  const LoopOverEachSound = () => {
-    // //loop over each block, and over each sound and check if should play
-    const drumset = document.querySelector(".drumset");
-    const allTracksInsideBlock = blocksNodes[index].props.children;
-    const playbackSpeed = (30 / speed) * 1000;
+  let indexOfCurrentNote = 0;
+  let interval;
+  let context;
+  const allTracks = [];
 
-    allTracksInsideBlock.forEach((children) => {
-      const soundValue = children.props.className.split(" ");
-      if (soundValue.length === 1) {
-        //selectors
-        const sound = new Howl({
-          src: [require(`../drumsets/${currentDrumset}/${soundValue[0]}.mp3`)],
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  context = new AudioContext();
+  store.context = context;
+  let nextNoteTime = context.currentTime;
+
+  let arrayOfBuffers = [];
+
+  const prepareAudioBuffers = async (drumset, shouldShedule) => {
+    arrayOfBuffers = [];
+    for (const track in tracks) {
+      const url = require(`../drumsets/${drumset}/${track}.mp3`);
+      const buffer = await fetch(url)
+        .then((response) => {
+          return response.arrayBuffer();
+        })
+        .then((arrayBuffer) => {
+          return context.decodeAudioData(arrayBuffer);
+        })
+        .then((audioBuffer) => {
+          return audioBuffer;
         });
-        const drumPadSelector = drumset.querySelector(`.${soundValue[0]}`);
-        //actions
-        //timeout used to synchronise animation of 'player motion' and sound
-        setTimeout(() => {
-          sound.play();
-          //animate drumPads
-          //enable animation of drumpads only on bigger devices
-          if (window.innerWidth > 640) {
-            drumPadSelector.style.animation = `drumPadHighlight ${animationDuration}s alternate ease-in-out 2`;
-            drumPadSelector.addEventListener("animationend", function () {
-              this.style.animation = "";
-            });
-          }
-        }, playbackSpeed);
-      }
-    });
-    if (index < blocksExperimental.length - 1) {
-      index++;
-      //return to the first block after screening throught the last one
-    } else index = 0;
-    if (index === 1) {
-      //activate animation when the looper starts
-      blocksInMotion = document.querySelector(".motion");
-      const singleBlockWidth = document.querySelector(".block").clientWidth;
-      const transformValue = blocksExperimental.length * singleBlockWidth;
-      setAnimation(
-        blocksInMotion.animate(
-          [
-            {
-              transform: "translateX(0px)",
-            },
-            {
-              transform: `translate(-${transformValue}px)`,
-            },
-          ],
-          {
-            duration: playbackSpeed * blocksExperimental.length,
-            iterations: 1,
-          }
-        )
-      );
+      arrayOfBuffers.push(buffer);
+    }
+    store.arrayOfBuffers = arrayOfBuffers;
+    if (shouldShedule) {
+      scheduler();
+      appendPhantomTrack();
     }
   };
 
+  const modifyTracksLength = (shouldAdd) => {
+    //disable modification when app is playing
+    if (!isPlaying) {
+      if (shouldAdd && tracksLength < 100) {
+        const longerTracks = tracks;
+        for (let track in longerTracks) {
+          const longerTrack = [...longerTracks[track], 0];
+          longerTracks[track] = longerTrack;
+        }
+        setTracks(longerTracks);
+        renderSoundBlocks();
+      } else if (!shouldAdd && tracksLength > 4) {
+        const shorterTracks = tracks;
+        for (let track in shorterTracks) {
+          const indexOfRemovedBeat = shorterTracks[track].length - 1;
+          const shorterTrack = shorterTracks[track].slice(
+            0,
+            indexOfRemovedBeat
+          );
+          shorterTracks[track] = shorterTrack;
+        }
+        setTracks(shorterTracks);
+        renderSoundBlocks();
+      }
+      setTracksLength(tracks.crash.length);
+    }
+  };
+
+  const renderSoundBlocks = () => {
+    //display all soundblocks according to state value
+    const container = document.querySelector(".motion");
+
+    container.innerHTML = "";
+    for (const track in tracks) {
+      const singleTrack = document.createElement("div");
+      singleTrack.classList.add("track", `${track}`);
+      tracks[track].forEach((tile) => {
+        let singleTile = document.createElement("div");
+        singleTile.id = `${track}-${index}`;
+        singleTile.classList.add("tile", `${track}`);
+        if (!tile) {
+          singleTile.classList.add(`empty`);
+        }
+        singleTile.addEventListener("click", (e) => {
+          onClickToggleActiveState(e);
+        });
+        singleTrack.appendChild(singleTile);
+        index++;
+
+        if (index === tracksLength) {
+          allTracks.push(singleTrack);
+          index = 0;
+        }
+      });
+      container.appendChild(singleTrack);
+    }
+  };
+
+  const onClickToggleActiveState = (e) => {
+    const clickedTile = e.target.id.split("-");
+    const indexOfClickedTile = clickedTile.pop();
+    const trackOfClickedTile = clickedTile[0];
+
+    for (const track in tracks) {
+      if (track === trackOfClickedTile) {
+        const updatedValue = tracks[track][indexOfClickedTile] ? 0 : 1;
+        tracks[track][indexOfClickedTile] = updatedValue;
+      }
+    }
+    renderSoundBlocks();
+  };
+
+  const animateTrack = () => {
+    blocksInMotion.style.animation = `tracksAnimation ${
+      interval * tracksLength
+    }s linear infinite`;
+  };
+
+  const sampleAudio = (indexOfCurrentTrack, time, singleTrackName) => {
+    //selectors
+    const drumset = document.querySelector(".drumset");
+    const drumPadSelector = drumset.querySelector(`.${singleTrackName}`);
+    const source = context.createBufferSource();
+    let sampleTime;
+    if (time - context.currentTime > 0.1) {
+      sampleTime = context.currentTime;
+    } else sampleTime = time;
+
+    //play sound
+    source.buffer = arrayOfBuffers[indexOfCurrentTrack];
+    source.connect(context.destination);
+    source.start(sampleTime);
+
+    //animate relative drumpad:
+    if (window.innerWidth > 640) {
+      drumPadSelector.style.animation = `drumPadHighlight ${
+        interval / 3
+      }s alternate ease-in-out 2`;
+      drumPadSelector.addEventListener("animationend", function () {
+        this.style.animation = "";
+      });
+    }
+  };
+
+  function scheduler() {
+    interval = 60 / (speed * 4);
+    setBeatScheduler(
+      setInterval(() => {
+        //schedule ahead of time...
+
+        if (context.currentTime !== 0) {
+          if ((indexOfCurrentNote === 0 && indexOfCurrentTrack) === 0) {
+            animateTrack();
+          }
+          for (const track in tracks) {
+            //1) loop over each tile (first, second etc.) of each track (snare,hihat etc.).
+            //   so it starts with first tile of each track, then goes to next one, and next one and so on...
+
+            singleTrackName = track;
+            singleTrackValue = tracks[track];
+            if (singleTrackValue[indexOfCurrentNote]) {
+              //2) if tile is active then schedule sound relative to this tile in this track.
+              // indexOfCurrentTrack to find proper buffer in arrayOfBuffers,
+              // nextNoteTime+interval - it is when the sound should be played,
+              // singleTrackName is used to animate corresponding drum pad.
+              sampleAudio(
+                indexOfCurrentTrack,
+                nextNoteTime + interval,
+                singleTrackName
+              );
+            }
+            if (indexOfCurrentTrack === 7) {
+              indexOfCurrentTrack = 0;
+            } else indexOfCurrentTrack++;
+          }
+          nextNoteTime += interval;
+          indexOfCurrentNote++;
+
+          if (indexOfCurrentNote === singleTrackValue.length) {
+            indexOfCurrentNote = 0;
+          }
+        }
+      }, interval * 1000)
+    );
+  }
+
+  const appendPhantomTrack = () => {
+    //its job is to prevent player from being empty when it starts animating tracks
+    //so it looks like tracks are in infinite loop.
+    const motionTrack = document.querySelector(".motion");
+    const phantomTrackContainer = document.createElement("div");
+    phantomTrackContainer.classList.add("phantom");
+    const phantomTrack = motionTrack.cloneNode(true);
+    const tracksContainer = document.querySelector(".tracks_container");
+    phantomTrack.classList.add("phantom");
+    tracksContainer.appendChild(phantomTrack);
+  };
+
   const Start = () => {
-    //check if speed value is not crazy, like 0 or 1 000 000
-    if (speed < 40) {
-      setSpeed(40);
-    } else if (speed > 300) {
-      setSpeed(300);
-    } else {
-      if (!isPlaying) {
-        props.toggleIsPlaying(true);
-        const playbackSpeed = (30 / speed) * 1000;
-        setIsPlaying(
-          setInterval(() => {
-            LoopOverEachSound();
-          }, playbackSpeed)
-        );
+    //if app is not playing, then start playing
+    if (!isPlaying) {
+      // check if speed value is not insanely big or small...
+      if (speed < 40) {
+        setSpeed(40);
+      } else if (speed > 200) {
+        setSpeed(200);
+      } else {
+        prepareAudioBuffers(currentDrumset, true);
+        setIsPlaying(true);
       }
     }
   };
 
   const Pause = () => {
-    index = 0;
-    clearInterval(isPlaying);
-    setIsPlaying(null);
-
-    //remove animation
-    animation.cancel();
-    props.toggleIsPlaying(false);
-  };
-  const handleSpeedChange = (e) => {
-    setSpeed(e.target.value);
-    animationDuration = 10 / speed;
+    if (isPlaying) {
+      index = 0;
+      clearInterval(beatScheduler);
+      setBeatScheduler(null);
+      setIsPlaying(false);
+      const phantomTrack = document.querySelector(".phantom");
+      phantomTrack.remove();
+      blocksInMotion.style.animation = "";
+    }
   };
 
-  renderSoundBlocks();
+  const clearAllTracks = () => {
+    let emptyTracks = tracks;
+    for (let track in tracks) {
+      emptyTracks[track] = tracks[track].map(() => {
+        return 0;
+      });
+    }
+    setTracks(emptyTracks);
+    renderSoundBlocks();
+  };
+
+  useEffect(() => {
+    //render all tracks when app loads
+    renderSoundBlocks();
+    prepareAudioBuffers("drumset1", false);
+    const animatedBlocks = document.querySelector(".tracks_container");
+    setBlocksInMotion(animatedBlocks);
+  }, []);
+
   return (
     <div className="player-container">
       <div className="action-menu">
@@ -165,30 +275,39 @@ export default function Player(props) {
         <button className="btn pause" onClick={(e) => Pause(e)}>
           <i className="fas fa-pause"></i>
         </button>
-        <div className="add-rm-section">
-          <button className="btn add" onClick={(e) => props.addNewBlock(e)}>
-            <i className="fas fa-plus"></i>
-          </button>
-          <button
-            className="btn remove"
-            onClick={(e) => props.removeLastBlock(e)}
-          >
-            <i className="fas fa-minus"></i>
-          </button>
-        </div>
-        <button className="btn clear" onClick={(e) => props.clearPlayer()}>
+        <button className="btn clear" onClick={() => clearAllTracks()}>
           <i className="fas fa-eraser"></i>
         </button>
       </div>
       <div className="info-area">
-        <p className="notation">{props.allBlocks.length}</p>
+        <div className="tracks-length">
+          <div
+            className="remove-beat"
+            onClick={() => modifyTracksLength(false)}
+          >
+            <i className="fas fa-minus"></i>
+          </div>
+          <div className="length">
+            <p className="length-value">{tracksLength}</p>
+
+            <p>beats</p>
+          </div>
+
+          <div className="add-beat" onClick={() => modifyTracksLength(true)}>
+            <i className="fas fa-plus"></i>
+          </div>
+        </div>
         <div className="tempo">
           <p className="tempo-header">Tempo</p>
           <input
             type="number"
             className="tempo-input"
             value={speed}
-            onChange={(e) => handleSpeedChange(e)}
+            onChange={(e) => {
+              if (!isPlaying) {
+                setSpeed(e.target.value);
+              }
+            }}
           ></input>
           <p className="tempo-units">BPM</p>
         </div>
@@ -199,6 +318,8 @@ export default function Player(props) {
             className="drum-select"
             onChange={(e) => {
               setCurrentDrumset(e.target.value);
+              store.currentDrumset = e.target.value;
+              prepareAudioBuffers(e.target.value, false);
             }}
           >
             <option value="drumset1">Acoustic 1</option>
@@ -208,12 +329,9 @@ export default function Player(props) {
           </select>
         </div>
       </div>
-      <Scrollbars style={{ width: "100%", height: "100%" }}>
+      <Scrollbars>
         <div className="player">
           <div className="block-info">
-            <div className="block-number random-class" style={{ opacity: 0 }}>
-              0
-            </div>
             <div className="crash"></div>
             <div className="ride"></div>
             <div className="hihat"></div>
@@ -223,12 +341,17 @@ export default function Player(props) {
             <div className="floor-tom"></div>
             <div className="kick"></div>
           </div>
-          <div className="player motion">
-            {blocksNodes}
-            {isPlaying ? blocksNodes : null}
+          <div className="tracks_container">
+            <div className="motion">
+              {
+                // here go all the tracks...
+              }
+            </div>
           </div>
         </div>
       </Scrollbars>
     </div>
   );
 }
+
+export default observer(Player);
