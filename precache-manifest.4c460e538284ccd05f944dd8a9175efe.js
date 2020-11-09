@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "60de5e61a939a4d081b988e02f07ac4e",
+    "revision": "8b4ba9542c17f38577cec261719f54ed",
     "url": "/Drooma/index.html"
   },
   {
-    "revision": "7658dd6e228b1984db8b",
-    "url": "/Drooma/static/css/main.295653f5.chunk.css"
+    "revision": "aed57be989a199e4ae30",
+    "url": "/Drooma/static/css/main.40ee3744.chunk.css"
   },
   {
-    "revision": "7ee602ef19f556c9dcd0",
-    "url": "/Drooma/static/js/2.6790c209.chunk.js"
+    "revision": "e084e2eb3e16a3549f7a",
+    "url": "/Drooma/static/js/2.334ab3dc.chunk.js"
   },
   {
-    "revision": "d2907550b0749ad10542a424f45133ae",
-    "url": "/Drooma/static/js/2.6790c209.chunk.js.LICENSE.txt"
+    "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
+    "url": "/Drooma/static/js/2.334ab3dc.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7658dd6e228b1984db8b",
-    "url": "/Drooma/static/js/main.afff64bd.chunk.js"
+    "revision": "aed57be989a199e4ae30",
+    "url": "/Drooma/static/js/main.51e1bd2d.chunk.js"
   },
   {
     "revision": "80950f70b0f2f58fbe18",
@@ -28,6 +28,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/media/crash.26293627.mp3"
   },
   {
+    "revision": "452fd4c30cc81906d805c780ad3a918d",
+    "url": "/Drooma/static/media/crash.452fd4c3.svg"
+  },
+  {
     "revision": "5ff8519533f7e86f8892cc5f75799b06",
     "url": "/Drooma/static/media/crash.5ff85195.mp3"
   },
@@ -36,32 +40,28 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/media/crash.7cabef0a.mp3"
   },
   {
-    "revision": "e9b68dc6f650150099e3f0ab15450b17",
-    "url": "/Drooma/static/media/crash.e9b68dc6.svg"
-  },
-  {
     "revision": "ec6de53ada9246fb8a6e01b6a9e79d79",
     "url": "/Drooma/static/media/crash.ec6de53a.mp3"
   },
   {
     "revision": "3b20097ff13e4a1c1dbcf85b674dd9a9",
-    "url": "/Drooma/static/media/floor-tom.3b20097f.mp3"
+    "url": "/Drooma/static/media/floor.3b20097f.mp3"
   },
   {
     "revision": "7cc9837e694ac744dfb82966ecdffa2a",
-    "url": "/Drooma/static/media/floor-tom.7cc9837e.mp3"
+    "url": "/Drooma/static/media/floor.7cc9837e.mp3"
   },
   {
     "revision": "9aac8e641b4e4e78d03255909d33ac40",
-    "url": "/Drooma/static/media/floor-tom.9aac8e64.mp3"
+    "url": "/Drooma/static/media/floor.9aac8e64.mp3"
+  },
+  {
+    "revision": "bbff715081a2de842b6fae1c28ebe35b",
+    "url": "/Drooma/static/media/floor.bbff7150.svg"
   },
   {
     "revision": "f42464d53cde8f3848edaf418a2c8293",
-    "url": "/Drooma/static/media/floor-tom.f42464d5.mp3"
-  },
-  {
-    "revision": "905acf2253439891dcd9d84836de902c",
-    "url": "/Drooma/static/media/floor.905acf22.svg"
+    "url": "/Drooma/static/media/floor.f42464d5.mp3"
   },
   {
     "revision": "2953458a34a438c5f3ad4826b544f751",
@@ -80,8 +80,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/media/hihat.89759442.mp3"
   },
   {
-    "revision": "a69f7602c5fa63fadad1121f94386f04",
-    "url": "/Drooma/static/media/hihat.a69f7602.svg"
+    "revision": "a313715db412ca3fa7b2fd9891eeb487",
+    "url": "/Drooma/static/media/hihat.a313715d.svg"
   },
   {
     "revision": "46940a6322f5a67bc0ad753ffa8352da",
@@ -96,12 +96,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/media/kick.8977ae4d.mp3"
   },
   {
-    "revision": "b89fc8291aea72fbf37485c1dc853603",
-    "url": "/Drooma/static/media/kick.b89fc829.mp3"
+    "revision": "89f909c22ee1740e9693ac1524988b57",
+    "url": "/Drooma/static/media/kick.89f909c2.svg"
   },
   {
-    "revision": "c1cb2846ad0e8802781cc2b2276d1c33",
-    "url": "/Drooma/static/media/kick.c1cb2846.svg"
+    "revision": "b89fc8291aea72fbf37485c1dc853603",
+    "url": "/Drooma/static/media/kick.b89fc829.mp3"
   },
   {
     "revision": "182d30de995524ad1d0ab213d148351d",
@@ -116,16 +116,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/media/ride.71fbbeff.mp3"
   },
   {
-    "revision": "7a33d76ef2acfcb8b61a5353b90e4039",
-    "url": "/Drooma/static/media/ride.7a33d76e.svg"
+    "revision": "788c1f6199f9b047716f8d908fd29c37",
+    "url": "/Drooma/static/media/ride.788c1f61.svg"
   },
   {
     "revision": "a84b71ded7ab01406a29c807f78d899e",
     "url": "/Drooma/static/media/ride.a84b71de.mp3"
   },
   {
-    "revision": "38e32e2bb10b850f0972328db8be4f10",
-    "url": "/Drooma/static/media/snare.38e32e2b.svg"
+    "revision": "2d080a8caa47db28308d7bf36859ffc4",
+    "url": "/Drooma/static/media/snare.2d080a8c.svg"
   },
   {
     "revision": "3e3ada9808f88178ebbde7173cbeb814",
@@ -152,8 +152,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/media/tom1.51a91bf4.mp3"
   },
   {
-    "revision": "64d7e1878c58de8e5989948692b95945",
-    "url": "/Drooma/static/media/tom1.64d7e187.svg"
+    "revision": "5b2179ac4ecbb6619d3b0d891d0fcc31",
+    "url": "/Drooma/static/media/tom1.5b2179ac.svg"
   },
   {
     "revision": "7ab040ff4b59f1aa35e858f13dda71bc",
@@ -164,12 +164,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/media/tom1.ae7a1b93.mp3"
   },
   {
-    "revision": "741a3314d7239547a7fcc4082210cb89",
-    "url": "/Drooma/static/media/tom2.741a3314.mp3"
+    "revision": "2faad85c8b2983e29cc2c7907c05beb0",
+    "url": "/Drooma/static/media/tom2.2faad85c.svg"
   },
   {
-    "revision": "8cad3512981f98a90ef43a617412d7c1",
-    "url": "/Drooma/static/media/tom2.8cad3512.svg"
+    "revision": "741a3314d7239547a7fcc4082210cb89",
+    "url": "/Drooma/static/media/tom2.741a3314.mp3"
   },
   {
     "revision": "a787d843a2e51b5507cadaf3711ddeb8",
