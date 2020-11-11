@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Drooma/static/css/main.40ee3744.chunk.css",
-    "main.js": "/Drooma/static/js/main.51e1bd2d.chunk.js",
-    "main.js.map": "/Drooma/static/js/main.51e1bd2d.chunk.js.map",
+    "main.css": "/Drooma/static/css/main.e143eb4a.chunk.css",
+    "main.js": "/Drooma/static/js/main.ad8d01b8.chunk.js",
+    "main.js.map": "/Drooma/static/js/main.ad8d01b8.chunk.js.map",
     "runtime-main.js": "/Drooma/static/js/runtime-main.4bae86af.js",
     "runtime-main.js.map": "/Drooma/static/js/runtime-main.4bae86af.js.map",
     "static/js/2.334ab3dc.chunk.js": "/Drooma/static/js/2.334ab3dc.chunk.js",
     "static/js/2.334ab3dc.chunk.js.map": "/Drooma/static/js/2.334ab3dc.chunk.js.map",
     "index.html": "/Drooma/index.html",
-    "precache-manifest.4c460e538284ccd05f944dd8a9175efe.js": "/Drooma/precache-manifest.4c460e538284ccd05f944dd8a9175efe.js",
+    "precache-manifest.6cc381f245e31f793b7e0319759f132b.js": "/Drooma/precache-manifest.6cc381f245e31f793b7e0319759f132b.js",
     "service-worker.js": "/Drooma/service-worker.js",
-    "static/css/main.40ee3744.chunk.css.map": "/Drooma/static/css/main.40ee3744.chunk.css.map",
+    "static/css/main.e143eb4a.chunk.css.map": "/Drooma/static/css/main.e143eb4a.chunk.css.map",
     "static/js/2.334ab3dc.chunk.js.LICENSE.txt": "/Drooma/static/js/2.334ab3dc.chunk.js.LICENSE.txt",
     "static/media/crash.mp3": "/Drooma/static/media/crash.ec6de53a.mp3",
     "static/media/crash.svg": "/Drooma/static/media/crash.452fd4c3.svg",
@@ -19,7 +19,7 @@
     "static/media/hihat.mp3": "/Drooma/static/media/hihat.89759442.mp3",
     "static/media/hihat.svg": "/Drooma/static/media/hihat.a313715d.svg",
     "static/media/kick.mp3": "/Drooma/static/media/kick.b89fc829.mp3",
-    "static/media/kick.svg": "/Drooma/static/media/kick.89f909c2.svg",
+    "static/media/kick.svg": "/Drooma/static/media/kick.d5d9cee7.svg",
     "static/media/ride.mp3": "/Drooma/static/media/ride.a84b71de.mp3",
     "static/media/ride.svg": "/Drooma/static/media/ride.788c1f61.svg",
     "static/media/snare.svg": "/Drooma/static/media/snare.2d080a8c.svg",
@@ -32,7 +32,7 @@
   "entrypoints": [
     "static/js/runtime-main.4bae86af.js",
     "static/js/2.334ab3dc.chunk.js",
-    "static/css/main.40ee3744.chunk.css",
-    "static/js/main.51e1bd2d.chunk.js"
+    "static/css/main.e143eb4a.chunk.css",
+    "static/js/main.ad8d01b8.chunk.js"
   ]
 }

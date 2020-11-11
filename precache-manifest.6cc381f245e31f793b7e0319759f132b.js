@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8b4ba9542c17f38577cec261719f54ed",
+    "revision": "82b3a9fd5e84ee6dcc33ada4d1debcbf",
     "url": "/Drooma/index.html"
   },
   {
-    "revision": "aed57be989a199e4ae30",
-    "url": "/Drooma/static/css/main.40ee3744.chunk.css"
+    "revision": "b8f2a5486fba06c50282",
+    "url": "/Drooma/static/css/main.e143eb4a.chunk.css"
   },
   {
     "revision": "e084e2eb3e16a3549f7a",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/js/2.334ab3dc.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "aed57be989a199e4ae30",
-    "url": "/Drooma/static/js/main.51e1bd2d.chunk.js"
+    "revision": "b8f2a5486fba06c50282",
+    "url": "/Drooma/static/js/main.ad8d01b8.chunk.js"
   },
   {
     "revision": "80950f70b0f2f58fbe18",
@@ -96,12 +96,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/media/kick.8977ae4d.mp3"
   },
   {
-    "revision": "89f909c22ee1740e9693ac1524988b57",
-    "url": "/Drooma/static/media/kick.89f909c2.svg"
-  },
-  {
     "revision": "b89fc8291aea72fbf37485c1dc853603",
     "url": "/Drooma/static/media/kick.b89fc829.mp3"
+  },
+  {
+    "revision": "d5d9cee787416acf065754a217bf985a",
+    "url": "/Drooma/static/media/kick.d5d9cee7.svg"
   },
   {
     "revision": "182d30de995524ad1d0ab213d148351d",
