@@ -1,0 +1,102 @@
+@import "variables";
+
+.drumset {
+  align-self: center;
+  height: 60vh;
+  min-height: 250px;
+  max-width: 90%;
+  margin: 10px auto 0 auto;
+  position: relative;
+
+  & > div {
+    position: absolute;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    padding: 0;
+    img {
+      transition: 0.3s;
+    }
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.kick-pad {
+  left: 40%;
+  bottom: 10%;
+  width: 20%;
+
+  img {
+    width: 100%;
+  }
+}
+.floor-tom-pad {
+  left: 60%;
+  bottom: 7%;
+  width: 20%;
+  transform: rotate(-25deg);
+
+  img {
+    width: 100%;
+  }
+}
+.snare-pad {
+  left: 25%;
+  bottom: 7%;
+  z-index: 1;
+  width: 18%;
+
+  img {
+    width: 100%;
+  }
+}
+.tom1-pad {
+  left: 35%;
+  bottom: 45%;
+
+  width: 13%;
+
+  img {
+    width: 100%;
+  }
+}
+.tom2-pad {
+  left: 50%;
+  bottom: 45%;
+  width: 15%;
+
+  img {
+    width: 100%;
+  }
+}
+.crash-pad {
+  left: 10%;
+  bottom: 50%;
+  width: 22%;
+  img {
+    width: 100%;
+  }
+}
+.ride-pad {
+  left: 67%;
+  bottom: 50%;
+  width: 21%;
+
+  img {
+    width: 100%;
+  }
+}
+.hihat-pad {
+  left: 10%;
+  bottom: 18%;
+  z-index: 2;
+  width: 15%;
+
+  img {
+    width: 100%;
+  }
+}

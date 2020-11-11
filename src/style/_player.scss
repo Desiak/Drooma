@@ -1,0 +1,281 @@
+@import "variables";
+
+.player-container {
+  color: white;
+  display: flex;
+  height: 35vh;
+  min-height: 300px;
+  width: 80%;
+  background-color: rgb(56, 56, 56);
+  margin: 0 auto;
+  align-items: center;
+  .action-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: 100%;
+    justify-content: space-between;
+    background-color: rgb(46, 46, 46);
+
+    .btn {
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 5px;
+    }
+    .play {
+      background-color: rgb(61, 245, 61);
+      flex-grow: 1;
+    }
+    .clear {
+      background-color: rgb(255, 89, 89);
+      flex-grow: 1;
+    }
+    .pause {
+      background-color: rgb(165, 165, 165);
+      flex-grow: 1;
+    }
+  }
+
+  .info-area {
+    text-align: center;
+    background-color: rgb(27, 27, 27);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    font-family: "Audiowide", cursive;
+    width: 150px;
+    height: 100%;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    .tracks-length {
+      display: flex;
+      width: 90%;
+      max-width: 300px;
+      align-items: center;
+      justify-content: space-around;
+      font-size: 1.2em;
+
+      .remove-beat,
+      .add-beat {
+        cursor: pointer;
+        padding: 5px;
+      }
+      .length {
+        .length-value {
+          font-size: 2.5em;
+          pointer-events: none;
+        }
+      }
+    }
+
+    .tempo {
+      .tempo-input {
+        font-family: "Audiowide", cursive;
+        background: rgba(255, 255, 255, 0.178);
+        padding: 4px;
+        color: white;
+        outline: none;
+        border: none;
+        font-size: 1.5em;
+        line-height: 1.5em;
+        text-align: center;
+        width: 80%;
+        max-width: 120px;
+      }
+    }
+    .drum-select {
+      background: none;
+      outline: none;
+      border: none;
+      font-size: 1em;
+      font-family: "Audiowide", cursive;
+      line-height: 1.5em;
+      color: white;
+
+      option {
+        background-color: rgb(27, 27, 27);
+      }
+    }
+  }
+  .player {
+    text-align: center;
+    display: flex;
+    padding: 10px 0;
+    height: 100%;
+    .tracks_container {
+      height: 100%;
+      width: fit-content;
+      display: flex;
+      flex-grow: 1;
+      .phantom {
+        position: absolute;
+        width: 100%;
+        transform: translateX(100%);
+      }
+    }
+    .motion {
+      width: fit-content;
+      height: 100%;
+      padding: 0;
+      overflow: visible;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+  }
+  .modify_length {
+    height: 60%;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 2em;
+    background-color: rgb(26, 26, 26);
+    border-radius: 0 40px 40px 0;
+    transition: 0.5s;
+
+    z-index: -1;
+    .add_beat {
+      flex-basis: 100%;
+      text-align: center;
+      cursor: pointer;
+    }
+    .remove_beat {
+      flex-basis: 100%;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+  &:hover {
+    .modify_length {
+      transform: translateX(100%);
+    }
+  }
+}
+
+//remove arrows from number inputs
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.highlight {
+  transform: scale(1.05);
+}
+
+.block-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1;
+  margin: 0;
+  padding-left: 50px;
+  background-image: linear-gradient(
+    90deg,
+    rgb(56, 56, 56),
+    rgba(56, 56, 56, 0.747),
+    rgba(255, 255, 255, 0)
+  );
+  .crash {
+    border: 3px solid $crash-color;
+  }
+
+  .ride {
+    border: 3px solid $ride-color;
+  }
+  .hihat {
+    border: 3px solid $hihat-color;
+  }
+  .snare {
+    border: 3px solid $snare-color;
+  }
+  .tom1 {
+    border: 3px solid $tom1-color;
+  }
+  .tom2 {
+    border: 3px solid $tom2-color;
+  }
+  .floor-tom {
+    border: 3px solid $floor-tom-color;
+  }
+  .kick {
+    border: 3px solid $kick-color;
+  }
+  & > div {
+    flex-grow: 1;
+    margin: 4px 0;
+    width: 40px;
+    border-radius: 10px;
+  }
+}
+
+.track {
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  flex-basis: 12%;
+  .tile {
+    padding: 5px 0;
+    margin: 5px 20px;
+    border-radius: 10px;
+    flex-grow: 1;
+
+    min-width: 40px;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .crash {
+    background-color: $crash-color;
+  }
+
+  .ride {
+    background-color: $ride-color;
+  }
+  .hihat {
+    background-color: $hihat-color;
+  }
+  .snare {
+    background-color: $snare-color;
+  }
+  .tom1 {
+    background-color: $tom1-color;
+  }
+  .tom2 {
+    background-color: $tom2-color;
+  }
+  .floor {
+    background-color: $floor-tom-color;
+  }
+  .kick {
+    background-color: $kick-color;
+  }
+  .empty {
+    border: 1px solid rgb(116, 116, 116);
+    background: none;
+  }
+}
+
+.edit-mode {
+  background-color: rgba(117, 117, 117, 0.411);
+  border-radius: 4px;
+  transform: scaleX(1.15);
+  transition: 0.2s;
+}

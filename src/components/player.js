@@ -6,7 +6,7 @@ import { observer } from "mobx-react";
 function Player() {
   const store = useContext(StoreContext);
   let index = 0;
-  const [isPlaying, setIsPlaying] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [currentDrumset, setCurrentDrumset] = useState("drumset1");
   const [speed, setSpeed] = useState(60);
   const [beatScheduler, setBeatScheduler] = useState(null);
@@ -42,7 +42,7 @@ function Player() {
   const prepareAudioBuffers = async (drumset, shouldShedule) => {
     arrayOfBuffers = [];
     for (const track in tracks) {
-      const url = require(`../drumsets/${drumset}/${track}.mp3`);
+      const url = require(`../assets/drumsets/${drumset}/${track}.mp3`);
       const buffer = await fetch(url)
         .then((response) => {
           return response.arrayBuffer();
@@ -72,7 +72,6 @@ function Player() {
           longerTracks[track] = longerTrack;
         }
         setTracks(longerTracks);
-        renderSoundBlocks();
       } else if (!shouldAdd && tracksLength > 4) {
         const shorterTracks = tracks;
         for (let track in shorterTracks) {
@@ -84,10 +83,10 @@ function Player() {
           shorterTracks[track] = shorterTrack;
         }
         setTracks(shorterTracks);
-        renderSoundBlocks();
       }
-      setTracksLength(tracks.crash.length);
     }
+    setTracksLength(tracks.crash.length);
+    renderSoundBlocks();
   };
 
   const renderSoundBlocks = () => {
@@ -111,7 +110,7 @@ function Player() {
         singleTrack.appendChild(singleTile);
         index++;
 
-        if (index === tracksLength) {
+        if (index === tracks.crash.length) {
           allTracks.push(singleTrack);
           index = 0;
         }
@@ -121,17 +120,19 @@ function Player() {
   };
 
   const onClickToggleActiveState = (e) => {
-    const clickedTile = e.target.id.split("-");
-    const indexOfClickedTile = clickedTile.pop();
-    const trackOfClickedTile = clickedTile[0];
+    if (!isPlaying) {
+      const clickedTile = e.target.id.split("-");
+      const indexOfClickedTile = clickedTile.pop();
+      const trackOfClickedTile = clickedTile[0];
 
-    for (const track in tracks) {
-      if (track === trackOfClickedTile) {
-        const updatedValue = tracks[track][indexOfClickedTile] ? 0 : 1;
-        tracks[track][indexOfClickedTile] = updatedValue;
+      for (const track in tracks) {
+        if (track === trackOfClickedTile) {
+          const updatedValue = tracks[track][indexOfClickedTile] ? 0 : 1;
+          tracks[track][indexOfClickedTile] = updatedValue;
+        }
       }
+      renderSoundBlocks();
     }
-    renderSoundBlocks();
   };
 
   const animateTrack = () => {
@@ -155,8 +156,8 @@ function Player() {
     source.connect(context.destination);
     source.start(sampleTime);
 
-    //animate relative drumpad:
-    if (window.innerWidth > 640) {
+    //animate corresponding drumpad, but only on larger devices:
+    if (window.innerWidth > 720) {
       drumPadSelector.style.animation = `drumPadHighlight ${
         interval / 3
       }s alternate ease-in-out 2`;
@@ -170,8 +171,7 @@ function Player() {
     interval = 60 / (speed * 4);
     setBeatScheduler(
       setInterval(() => {
-        //schedule ahead of time...
-
+        //schedule sounds ahead of time...
         if (context.currentTime !== 0) {
           if ((indexOfCurrentNote === 0 && indexOfCurrentTrack) === 0) {
             animateTrack();
@@ -248,14 +248,22 @@ function Player() {
   };
 
   const clearAllTracks = () => {
-    let emptyTracks = tracks;
-    for (let track in tracks) {
-      emptyTracks[track] = tracks[track].map(() => {
-        return 0;
-      });
+    if (!isPlaying) {
+      let emptyTracks = tracks;
+      for (let track in tracks) {
+        emptyTracks[track] = tracks[track].map(() => {
+          return 0;
+        });
+      }
+      setTracks(emptyTracks);
+      renderSoundBlocks();
     }
-    setTracks(emptyTracks);
-    renderSoundBlocks();
+  };
+
+  const handleDrumsetSelect = (e) => {
+    setCurrentDrumset(e.target.value);
+    store.currentDrumset = e.target.value;
+    prepareAudioBuffers(e.target.value, false);
   };
 
   useEffect(() => {
@@ -317,9 +325,7 @@ function Player() {
             id="drum-select"
             className="drum-select"
             onChange={(e) => {
-              setCurrentDrumset(e.target.value);
-              store.currentDrumset = e.target.value;
-              prepareAudioBuffers(e.target.value, false);
+              handleDrumsetSelect(e);
             }}
           >
             <option value="drumset1">Acoustic 1</option>

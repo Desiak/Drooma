@@ -1,0 +1,177 @@
+@media (max-width: 900px) {
+  .main {
+    height: 100vh;
+    margin: 0;
+    overflow: scroll;
+  }
+  .player-container {
+    flex-direction: column;
+    height: 60vh;
+    width: 100%;
+    .action-menu {
+      flex-direction: row;
+      flex-basis: 0;
+      width: 100%;
+    }
+    .info-area {
+      flex-direction: row;
+      flex-basis: 0;
+      order: -1;
+      width: 100%;
+      justify-content: space-around;
+      padding: 10px;
+
+      .tempo {
+        padding: 0 10px;
+        .tempo-input {
+          background-color: unset;
+          font-size: 1.8em;
+        }
+        .tempo-header {
+          display: none;
+        }
+        .tempo-units {
+          display: inline;
+          font-size: 1.5em;
+        }
+      }
+    }
+  }
+  .drumset {
+    max-width: unset;
+    width: 100%;
+    height: 40vh;
+  }
+}
+
+@media (max-width: 640px) {
+  .player-container {
+    .info-area {
+      padding: 0;
+      .tempo {
+        background-color: rgb(43, 43, 43);
+        flex-grow: auto;
+        .tempo-input {
+          border-bottom: unset;
+          min-width: 0;
+          padding: 0;
+          max-width: 80px;
+        }
+      }
+      .notation {
+        font-size: 2.2em;
+      }
+    }
+    .block-info {
+      padding-left: 20px;
+    }
+    .player {
+      padding-bottom: 10px;
+    }
+  }
+  .drumset {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 33%);
+    margin-top: 20px;
+    height: 35vh;
+
+    .crash-pad {
+      grid-area: 1/1/2/4;
+      border: 2px solid $crash-color;
+      &::before {
+        content: "crash";
+      }
+    }
+
+    .ride-pad {
+      grid-area: 1/4/2/7;
+      border: 2px solid $ride-color;
+      &::before {
+        content: "ride";
+      }
+    }
+    .hihat-pad {
+      grid-area: 3/1/4/3;
+      border: 2px solid $hihat-color;
+      &::before {
+        content: "hihat";
+      }
+    }
+    .snare-pad {
+      grid-area: 3/3/4/5;
+      border: 2px solid $snare-color;
+      &::before {
+        content: "snare";
+      }
+    }
+    .tom1-pad {
+      grid-area: 2/1/3/3;
+      border: 2px solid $tom1-color;
+      &::before {
+        content: "tom 1";
+      }
+    }
+    .tom2-pad {
+      grid-area: 2/3/3/5;
+      border: 2px solid $tom2-color;
+      &::before {
+        content: "tom 2";
+      }
+    }
+    .floor-tom-pad {
+      grid-area: 2/5/3/7;
+      border: 2px solid $floor-tom-color;
+      &::before {
+        content: "floor tom";
+      }
+    }
+    .kick-pad {
+      grid-area: 3/5/4/7;
+      border: 2px solid $kick-color;
+      &::before {
+        content: "kick";
+      }
+    }
+    & > div {
+      font-family: "Audiowide", cursive;
+      position: inherit;
+      border-radius: 10px;
+      width: 100%;
+      height: 100%;
+      transform: unset;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgb(233, 233, 233);
+      font-size: 1em;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 0.2rem;
+      img {
+        display: none;
+      }
+    }
+  }
+}
+@media (max-width: 900px) and (orientation: landscape) {
+  .player-container {
+    height: 100vh;
+    max-height: 400px;
+    .info-area {
+      padding: 0 10px;
+    }
+    .tile,
+    .block-info > div {
+      margin: 2px 20px;
+    }
+  }
+  .drumset {
+    min-height: 300px;
+  }
+}
