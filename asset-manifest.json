@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Drooma/static/css/main.e143eb4a.chunk.css",
+    "main.css": "/Drooma/static/css/main.9ce525ad.chunk.css",
     "main.js": "/Drooma/static/js/main.ad8d01b8.chunk.js",
     "main.js.map": "/Drooma/static/js/main.ad8d01b8.chunk.js.map",
     "runtime-main.js": "/Drooma/static/js/runtime-main.4bae86af.js",
@@ -8,9 +8,9 @@
     "static/js/2.334ab3dc.chunk.js": "/Drooma/static/js/2.334ab3dc.chunk.js",
     "static/js/2.334ab3dc.chunk.js.map": "/Drooma/static/js/2.334ab3dc.chunk.js.map",
     "index.html": "/Drooma/index.html",
-    "precache-manifest.6cc381f245e31f793b7e0319759f132b.js": "/Drooma/precache-manifest.6cc381f245e31f793b7e0319759f132b.js",
+    "precache-manifest.945f215ea709be7b54b57efc0b024e3c.js": "/Drooma/precache-manifest.945f215ea709be7b54b57efc0b024e3c.js",
     "service-worker.js": "/Drooma/service-worker.js",
-    "static/css/main.e143eb4a.chunk.css.map": "/Drooma/static/css/main.e143eb4a.chunk.css.map",
+    "static/css/main.9ce525ad.chunk.css.map": "/Drooma/static/css/main.9ce525ad.chunk.css.map",
     "static/js/2.334ab3dc.chunk.js.LICENSE.txt": "/Drooma/static/js/2.334ab3dc.chunk.js.LICENSE.txt",
     "static/media/crash.mp3": "/Drooma/static/media/crash.ec6de53a.mp3",
     "static/media/crash.svg": "/Drooma/static/media/crash.452fd4c3.svg",
@@ -32,7 +32,7 @@
   "entrypoints": [
     "static/js/runtime-main.4bae86af.js",
     "static/js/2.334ab3dc.chunk.js",
-    "static/css/main.e143eb4a.chunk.css",
+    "static/css/main.9ce525ad.chunk.css",
     "static/js/main.ad8d01b8.chunk.js"
   ]
 }
