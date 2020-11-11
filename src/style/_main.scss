@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+  background: rgb(44, 44, 44);
+}
+
+.main {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  z-index: -2;
+}
+
+@keyframes drumPadHighlight {
+  to {
+    transform: scale(1.02);
+    filter: brightness(2);
+  }
+}
+
+@keyframes tracksAnimation {
+  to {
+    transform: translateX(-100%);
+  }
+}
