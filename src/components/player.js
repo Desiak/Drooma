@@ -36,13 +36,18 @@ function Player() {
   context = new AudioContext();
   store.context = context;
   let nextNoteTime = context.currentTime;
+  console.log("audio time ", context.currentTime);
 
   let arrayOfBuffers = [];
 
   const prepareAudioBuffers = async (drumset, shouldShedule) => {
+    console.log("2) audio buffers are being prepared!");
+
     arrayOfBuffers = [];
     for (const track in tracks) {
       const url = require(`../assets/drumsets/${drumset}/${track}.mp3`);
+      console.log("3) loading track " + track + ", from drumset " + drumset);
+
       const buffer = await fetch(url)
         .then((response) => {
           return response.arrayBuffer();
@@ -136,12 +141,16 @@ function Player() {
   };
 
   const animateTrack = () => {
+    console.log("5) animation of track begins");
+
     blocksInMotion.style.animation = `tracksAnimation ${
       interval * tracksLength
     }s linear infinite`;
   };
 
   const sampleAudio = (indexOfCurrentTrack, time, singleTrackName) => {
+    console.log("5a) Sampling audio");
+
     //selectors
     const drumset = document.querySelector(".drumset");
     const drumPadSelector = drumset.querySelector(`.${singleTrackName}`);
@@ -168,21 +177,31 @@ function Player() {
   };
 
   function scheduler() {
+    console.log("4) schedulling tracks begins!");
+
     interval = 60 / (speed * 4);
     setBeatScheduler(
       setInterval(() => {
+        console.log("4a", context.currentTime);
         //schedule sounds ahead of time...
         if (context.currentTime !== 0) {
+          console.log("4b");
+
           if ((indexOfCurrentNote === 0 && indexOfCurrentTrack) === 0) {
             animateTrack();
+            console.log("4c");
           }
           for (const track in tracks) {
+            console.log("4d");
+
             //1) loop over each tile (first, second etc.) of each track (snare,hihat etc.).
             //   so it starts with first tile of each track, then goes to next one, and next one and so on...
 
             singleTrackName = track;
             singleTrackValue = tracks[track];
             if (singleTrackValue[indexOfCurrentNote]) {
+              console.log("4e");
+
               //2) if tile is active then schedule sound relative to this tile in this track.
               // indexOfCurrentTrack to find proper buffer in arrayOfBuffers,
               // nextNoteTime+interval - it is when the sound should be played,
@@ -221,6 +240,7 @@ function Player() {
   };
 
   const Start = () => {
+    console.log("1) button play was clicked!", context.currentTime);
     //if app is not playing, then start playing
     if (!isPlaying) {
       // check if speed value is not insanely big or small...
