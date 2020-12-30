@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "55a53c08a1f0a5eb3c6692d160123453",
+    "revision": "3b3cd769e6dc284e2d9962c8577f3161",
     "url": "/Drooma/index.html"
   },
   {
-    "revision": "a4e9fd108fc20d5a9174",
-    "url": "/Drooma/static/css/main.9ce525ad.chunk.css"
+    "revision": "114758b4e6e62195a357",
+    "url": "/Drooma/static/css/main.36ef230f.chunk.css"
   },
   {
     "revision": "e084e2eb3e16a3549f7a",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Drooma/static/js/2.334ab3dc.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a4e9fd108fc20d5a9174",
-    "url": "/Drooma/static/js/main.d9b07e29.chunk.js"
+    "revision": "114758b4e6e62195a357",
+    "url": "/Drooma/static/js/main.6c390c60.chunk.js"
   },
   {
     "revision": "80950f70b0f2f58fbe18",
