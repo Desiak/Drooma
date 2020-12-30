@@ -7,7 +7,6 @@ function Player() {
   const store = useContext(StoreContext);
   let index = 0;
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentDrumset, setCurrentDrumset] = useState("drumset1");
   const [speed, setSpeed] = useState(60);
   const [beatScheduler, setBeatScheduler] = useState(null);
   const [blocksInMotion, setBlocksInMotion] = useState(null);
@@ -22,6 +21,11 @@ function Player() {
     kick: [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
   });
   const [tracksLength, setTracksLength] = useState(tracks.crash.length);
+  const drumset = document.querySelector(".drumset");
+
+  //necessary in appending phantom track:
+  const motionTrack = document.querySelector(".motion");
+  const tracksContainer = document.querySelector(".tracks_container");
 
   let singleTrackName;
   let singleTrackValue;
@@ -35,19 +39,13 @@ function Player() {
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   context = new AudioContext();
   store.context = context;
+
   let nextNoteTime = context.currentTime;
-  console.log("audio time ", context.currentTime);
+  const prepareAudioBuffers = async (drumset) => {
+    let arrayOfBuffers = [];
 
-  let arrayOfBuffers = [];
-
-  const prepareAudioBuffers = async (drumset, shouldShedule) => {
-    console.log("2) audio buffers are being prepared!");
-
-    arrayOfBuffers = [];
     for (const track in tracks) {
       const url = require(`../assets/drumsets/${drumset}/${track}.mp3`);
-      console.log("3) loading track " + track + ", from drumset " + drumset);
-
       const buffer = await fetch(url)
         .then((response) => {
           return response.arrayBuffer();
@@ -60,11 +58,8 @@ function Player() {
         });
       arrayOfBuffers.push(buffer);
     }
+
     store.arrayOfBuffers = arrayOfBuffers;
-    if (shouldShedule) {
-      scheduler();
-      appendPhantomTrack();
-    }
   };
 
   const modifyTracksLength = (shouldAdd) => {
@@ -139,32 +134,21 @@ function Player() {
       renderSoundBlocks();
     }
   };
-
   const animateTrack = () => {
-    console.log("5) animation of track begins");
-
     blocksInMotion.style.animation = `tracksAnimation ${
       interval * tracksLength
     }s linear infinite`;
   };
 
   const sampleAudio = (indexOfCurrentTrack, time, singleTrackName) => {
-    console.log("5a) Sampling audio");
-
     //selectors
-    const drumset = document.querySelector(".drumset");
     const drumPadSelector = drumset.querySelector(`.${singleTrackName}`);
     const source = context.createBufferSource();
-    let sampleTime;
-    if (time - context.currentTime > 0.1) {
-      sampleTime = context.currentTime;
-    } else sampleTime = time;
 
     //play sound
-    source.buffer = arrayOfBuffers[indexOfCurrentTrack];
+    source.buffer = store.arrayOfBuffers[indexOfCurrentTrack];
     source.connect(context.destination);
-    source.start(sampleTime);
-
+    source.start(time);
     //animate corresponding drumpad, but only on larger devices:
     if (window.innerWidth > 720) {
       drumPadSelector.style.animation = `drumPadHighlight ${
@@ -177,31 +161,21 @@ function Player() {
   };
 
   function scheduler() {
-    console.log("4) schedulling tracks begins!");
-
     interval = 60 / (speed * 4);
     setBeatScheduler(
       setInterval(() => {
-        console.log("4a", context.currentTime);
         //schedule sounds ahead of time...
         if (context.currentTime !== 0) {
-          console.log("4b");
-
           if ((indexOfCurrentNote === 0 && indexOfCurrentTrack) === 0) {
             animateTrack();
-            console.log("4c");
           }
           for (const track in tracks) {
-            console.log("4d");
-
             //1) loop over each tile (first, second etc.) of each track (snare,hihat etc.).
             //   so it starts with first tile of each track, then goes to next one, and next one and so on...
 
             singleTrackName = track;
             singleTrackValue = tracks[track];
             if (singleTrackValue[indexOfCurrentNote]) {
-              console.log("4e");
-
               //2) if tile is active then schedule sound relative to this tile in this track.
               // indexOfCurrentTrack to find proper buffer in arrayOfBuffers,
               // nextNoteTime+interval - it is when the sound should be played,
@@ -230,29 +204,29 @@ function Player() {
   const appendPhantomTrack = () => {
     //its job is to prevent player from being empty when it starts animating tracks
     //so it looks like tracks are in infinite loop.
-    const motionTrack = document.querySelector(".motion");
     const phantomTrackContainer = document.createElement("div");
     phantomTrackContainer.classList.add("phantom");
     const phantomTrack = motionTrack.cloneNode(true);
-    const tracksContainer = document.querySelector(".tracks_container");
     phantomTrack.classList.add("phantom");
     tracksContainer.appendChild(phantomTrack);
   };
 
   const Start = () => {
-    console.log("1) button play was clicked!", context.currentTime);
-    //if app is not playing, then start playing
-    if (!isPlaying) {
-      // check if speed value is not insanely big or small...
-      if (speed < 40) {
-        setSpeed(40);
-      } else if (speed > 200) {
-        setSpeed(200);
-      } else {
-        prepareAudioBuffers(currentDrumset, true);
-        setIsPlaying(true);
+    context.resume().then(() => {
+      //if app is not playing, then start playing
+      if (!isPlaying) {
+        // check if speed value is not insanely big or small...
+        if (speed < 40) {
+          setSpeed(40);
+        } else if (speed > 200) {
+          setSpeed(200);
+        } else {
+          scheduler();
+          appendPhantomTrack();
+          setIsPlaying(true);
+        }
       }
-    }
+    });
   };
 
   const Pause = () => {
@@ -281,15 +255,14 @@ function Player() {
   };
 
   const handleDrumsetSelect = (e) => {
-    setCurrentDrumset(e.target.value);
     store.currentDrumset = e.target.value;
-    prepareAudioBuffers(e.target.value, false);
+    prepareAudioBuffers(e.target.value);
   };
 
   useEffect(() => {
     //render all tracks when app loads
     renderSoundBlocks();
-    prepareAudioBuffers("drumset1", false);
+    prepareAudioBuffers("drumset1");
     const animatedBlocks = document.querySelector(".tracks_container");
     setBlocksInMotion(animatedBlocks);
   }, []);

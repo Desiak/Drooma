@@ -423,7 +423,7 @@ input[type="number"] {
 }
 
 .track .empty {
-  border: 1px solid #747474;
+  border: 2px solid #656565;
   background: none;
 }
 
