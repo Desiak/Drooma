@@ -7,18 +7,282 @@ function Player() {
   const store = useContext(StoreContext);
   let index = 0;
   const [isPlaying, setIsPlaying] = useState(false);
-  const [speed, setSpeed] = useState(60);
+  const [speed, setSpeed] = useState(80);
   const [beatScheduler, setBeatScheduler] = useState(null);
   const [blocksInMotion, setBlocksInMotion] = useState(null);
   const [tracks, setTracks] = useState({
-    crash: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ride: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    hihat: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-    snare: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    tom1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    tom2: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    floor: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    kick: [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+    crash: [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+    ],
+    ride: [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+    ],
+    hihat: [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+    ],
+    snare: [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+    ],
+    tom1: [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+    ],
+    tom2: [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+    ],
+    floor: [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+    ],
+    kick: [
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+    ],
   });
   const [tracksLength, setTracksLength] = useState(tracks.crash.length);
   const drumset = document.querySelector(".drumset");
@@ -33,14 +297,60 @@ function Player() {
 
   let indexOfCurrentNote = 0;
   let interval;
-  let context;
+  const context = store.context;
   const allTracks = [];
-
-  window.AudioContext = window.AudioContext || window.webkitAudioContext;
-  context = new AudioContext();
-  store.context = context;
-
   let nextNoteTime = context.currentTime;
+
+  //functions triggered in action menu:
+
+  const Start = () => {
+    context.resume().then(() => {
+      //if app is not playing, then start playing
+      if (!isPlaying) {
+        // check if speed value is not insanely big or small...
+        if (speed < 40) {
+          setSpeed(40);
+        } else if (speed > 200) {
+          setSpeed(200);
+        } else {
+          scheduler();
+          appendPhantomTrack();
+          setIsPlaying(true);
+        }
+      }
+    });
+  };
+
+  const Pause = () => {
+    if (isPlaying) {
+      index = 0;
+      clearInterval(beatScheduler);
+      setBeatScheduler(null);
+      setIsPlaying(false);
+      const phantomTrack = document.querySelector(".phantom");
+      phantomTrack.remove();
+      blocksInMotion.style.animation = "";
+    }
+  };
+
+  const clearAllTracks = () => {
+    if (!isPlaying) {
+      let emptyTracks = tracks;
+      for (let track in tracks) {
+        emptyTracks[track] = tracks[track].map(() => {
+          return 0;
+        });
+      }
+      setTracks(emptyTracks);
+      renderSoundBlocks();
+    }
+  };
+
+  const handleDrumsetSelect = (e) => {
+    store.currentDrumset = e.target.value;
+    prepareAudioBuffers(e.target.value);
+  };
+
   const prepareAudioBuffers = async (drumset) => {
     let arrayOfBuffers = [];
 
@@ -62,78 +372,6 @@ function Player() {
     store.arrayOfBuffers = arrayOfBuffers;
   };
 
-  const modifyTracksLength = (shouldAdd) => {
-    //disable modification when app is playing
-    if (!isPlaying) {
-      if (shouldAdd && tracksLength < 100) {
-        const longerTracks = tracks;
-        for (let track in longerTracks) {
-          const longerTrack = [...longerTracks[track], 0];
-          longerTracks[track] = longerTrack;
-        }
-        setTracks(longerTracks);
-      } else if (!shouldAdd && tracksLength > 4) {
-        const shorterTracks = tracks;
-        for (let track in shorterTracks) {
-          const indexOfRemovedBeat = shorterTracks[track].length - 1;
-          const shorterTrack = shorterTracks[track].slice(
-            0,
-            indexOfRemovedBeat
-          );
-          shorterTracks[track] = shorterTrack;
-        }
-        setTracks(shorterTracks);
-      }
-    }
-    setTracksLength(tracks.crash.length);
-    renderSoundBlocks();
-  };
-
-  const renderSoundBlocks = () => {
-    //display all soundblocks according to state value
-    const container = document.querySelector(".motion");
-
-    container.innerHTML = "";
-    for (const track in tracks) {
-      const singleTrack = document.createElement("div");
-      singleTrack.classList.add("track", `${track}`);
-      tracks[track].forEach((tile) => {
-        let singleTile = document.createElement("div");
-        singleTile.id = `${track}-${index}`;
-        singleTile.classList.add("tile", `${track}`);
-        if (!tile) {
-          singleTile.classList.add(`empty`);
-        }
-        singleTile.addEventListener("click", (e) => {
-          onClickToggleActiveState(e);
-        });
-        singleTrack.appendChild(singleTile);
-        index++;
-
-        if (index === tracks.crash.length) {
-          allTracks.push(singleTrack);
-          index = 0;
-        }
-      });
-      container.appendChild(singleTrack);
-    }
-  };
-
-  const onClickToggleActiveState = (e) => {
-    if (!isPlaying) {
-      const clickedTile = e.target.id.split("-");
-      const indexOfClickedTile = clickedTile.pop();
-      const trackOfClickedTile = clickedTile[0];
-
-      for (const track in tracks) {
-        if (track === trackOfClickedTile) {
-          const updatedValue = tracks[track][indexOfClickedTile] ? 0 : 1;
-          tracks[track][indexOfClickedTile] = updatedValue;
-        }
-      }
-      renderSoundBlocks();
-    }
-  };
   const animateTrack = () => {
     blocksInMotion.style.animation = `tracksAnimation ${
       interval * tracksLength
@@ -142,15 +380,17 @@ function Player() {
 
   const sampleAudio = (indexOfCurrentTrack, time, singleTrackName) => {
     //selectors
-    const drumPadSelector = drumset.querySelector(`.${singleTrackName}`);
     const source = context.createBufferSource();
 
     //play sound
     source.buffer = store.arrayOfBuffers[indexOfCurrentTrack];
     source.connect(context.destination);
     source.start(time);
-    //animate corresponding drumpad, but only on larger devices:
+
+    //animate corresponding drumpad - only on larger devices:
     if (window.innerWidth > 720) {
+      const drumPadSelector = drumset.querySelector(`.${singleTrackName}`);
+
       drumPadSelector.style.animation = `drumPadHighlight ${
         interval / 3
       }s alternate ease-in-out 2`;
@@ -211,52 +451,80 @@ function Player() {
     tracksContainer.appendChild(phantomTrack);
   };
 
-  const Start = () => {
-    context.resume().then(() => {
-      //if app is not playing, then start playing
-      if (!isPlaying) {
-        // check if speed value is not insanely big or small...
-        if (speed < 40) {
-          setSpeed(40);
-        } else if (speed > 200) {
-          setSpeed(200);
-        } else {
-          scheduler();
-          appendPhantomTrack();
-          setIsPlaying(true);
+  const modifyTracksLength = (shouldAdd) => {
+    //disable modification when app is playing
+    if (!isPlaying) {
+      if (shouldAdd && tracksLength < 100) {
+        const longerTracks = tracks;
+        for (let track in longerTracks) {
+          const longerTrack = [...longerTracks[track], 0];
+          longerTracks[track] = longerTrack;
+        }
+        setTracks(longerTracks);
+      } else if (!shouldAdd && tracksLength > 4) {
+        const shorterTracks = tracks;
+        for (let track in shorterTracks) {
+          const indexOfRemovedBeat = shorterTracks[track].length - 1;
+          const shorterTrack = shorterTracks[track].slice(
+            0,
+            indexOfRemovedBeat
+          );
+          shorterTracks[track] = shorterTrack;
+        }
+        setTracks(shorterTracks);
+      }
+    }
+    setTracksLength(tracks.crash.length);
+    renderSoundBlocks();
+  };
+
+  //functions triggered in player:
+
+  const onClickToggleActiveState = (e) => {
+    if (!isPlaying) {
+      const clickedTile = e.target.id.split("-");
+      const indexOfClickedTile = clickedTile.pop();
+      const trackOfClickedTile = clickedTile[0];
+
+      for (const track in tracks) {
+        if (track === trackOfClickedTile) {
+          const updatedValue = tracks[track][indexOfClickedTile] ? 0 : 1;
+          tracks[track][indexOfClickedTile] = updatedValue;
         }
       }
-    });
-  };
-
-  const Pause = () => {
-    if (isPlaying) {
-      index = 0;
-      clearInterval(beatScheduler);
-      setBeatScheduler(null);
-      setIsPlaying(false);
-      const phantomTrack = document.querySelector(".phantom");
-      phantomTrack.remove();
-      blocksInMotion.style.animation = "";
-    }
-  };
-
-  const clearAllTracks = () => {
-    if (!isPlaying) {
-      let emptyTracks = tracks;
-      for (let track in tracks) {
-        emptyTracks[track] = tracks[track].map(() => {
-          return 0;
-        });
-      }
-      setTracks(emptyTracks);
       renderSoundBlocks();
     }
   };
 
-  const handleDrumsetSelect = (e) => {
-    store.currentDrumset = e.target.value;
-    prepareAudioBuffers(e.target.value);
+  // functions triggered both in action menu and player:
+  const renderSoundBlocks = () => {
+    //display all soundblocks according to state value
+    const container = document.querySelector(".motion");
+
+    container.innerHTML = "";
+    for (const track in tracks) {
+      const singleTrack = document.createElement("div");
+      singleTrack.classList.add("track", `${track}`);
+      tracks[track].forEach((tile) => {
+        let singleTile = document.createElement("div");
+        singleTile.id = `${track}-${index}`;
+        singleTile.classList.add("tile", `${track}`);
+        if (!tile) {
+          singleTile.classList.add(`empty`);
+        }
+        singleTile.addEventListener("click", (e) => {
+          onClickToggleActiveState(e);
+        });
+        singleTrack.appendChild(singleTile);
+        index++;
+
+        if (index === tracks.crash.length) {
+          allTracks.push(singleTrack);
+          index = 0;
+        }
+      });
+      container.appendChild(singleTrack);
+    }
   };
 
   useEffect(() => {

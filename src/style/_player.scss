@@ -268,8 +268,9 @@ input[type="number"] {
     background-color: $kick-color;
   }
   .empty {
-    border: 2px solid rgb(101, 101, 101);
+    border: 2px solid rgb(96, 96, 96);
     background: none;
+    transform: scale(0.9);
   }
 }
 

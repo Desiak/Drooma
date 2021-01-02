@@ -26,8 +26,8 @@ body {
   to {
     -webkit-transform: scale(1.02);
             transform: scale(1.02);
-    -webkit-filter: brightness(2);
-            filter: brightness(2);
+    -webkit-filter: brightness(1.5);
+            filter: brightness(1.5);
   }
 }
 
@@ -35,8 +35,8 @@ body {
   to {
     -webkit-transform: scale(1.02);
             transform: scale(1.02);
-    -webkit-filter: brightness(2);
-            filter: brightness(2);
+    -webkit-filter: brightness(1.5);
+            filter: brightness(1.5);
   }
 }
 
@@ -321,7 +321,7 @@ input[type="number"] {
 }
 
 .block-info .crash {
-  border: 3px solid #ff9d9d;
+  border: 3px solid #f75e5e;
 }
 
 .block-info .ride {
@@ -329,7 +329,7 @@ input[type="number"] {
 }
 
 .block-info .hihat {
-  border: 3px solid #807ef1;
+  border: 3px solid #6579ff;
 }
 
 .block-info .snare {
@@ -337,7 +337,7 @@ input[type="number"] {
 }
 
 .block-info .tom1 {
-  border: 3px solid #7aed86;
+  border: 3px solid #47ff59;
 }
 
 .block-info .tom2 {
@@ -345,11 +345,11 @@ input[type="number"] {
 }
 
 .block-info .floor-tom {
-  border: 3px solid #f3b56f;
+  border: 3px solid #ffae51;
 }
 
 .block-info .kick {
-  border: 3px solid #ef5959;
+  border: 3px solid #fb2b2b;
 }
 
 .block-info > div {
@@ -391,7 +391,7 @@ input[type="number"] {
 }
 
 .track .crash {
-  background-color: #ff9d9d;
+  background-color: #f75e5e;
 }
 
 .track .ride {
@@ -399,7 +399,7 @@ input[type="number"] {
 }
 
 .track .hihat {
-  background-color: #807ef1;
+  background-color: #6579ff;
 }
 
 .track .snare {
@@ -407,7 +407,7 @@ input[type="number"] {
 }
 
 .track .tom1 {
-  background-color: #7aed86;
+  background-color: #47ff59;
 }
 
 .track .tom2 {
@@ -415,16 +415,18 @@ input[type="number"] {
 }
 
 .track .floor {
-  background-color: #f3b56f;
+  background-color: #ffae51;
 }
 
 .track .kick {
-  background-color: #ef5959;
+  background-color: #fb2b2b;
 }
 
 .track .empty {
-  border: 2px solid #656565;
+  border: 2px solid #606060;
   background: none;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
 }
 
 .edit-mode {
@@ -540,7 +542,7 @@ input[type="number"] {
 }
 
 .hihat-pad {
-  left: 5%;
+  left: 10%;
   bottom: 40%;
   z-index: 2;
   width: 15%;
@@ -651,7 +653,7 @@ input[type="number"] {
     -ms-grid-column: 1;
     -ms-grid-column-span: 3;
     grid-area: 1/1/2/4;
-    border: 2px solid #ff9d9d;
+    border: 2px solid #f75e5e;
   }
   .drumset .crash-pad::before {
     content: "crash";
@@ -673,7 +675,7 @@ input[type="number"] {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-area: 3/1/4/3;
-    border: 2px solid #807ef1;
+    border: 2px solid #6579ff;
   }
   .drumset .hihat-pad::before {
     content: "hihat";
@@ -695,7 +697,7 @@ input[type="number"] {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-area: 2/1/3/3;
-    border: 2px solid #7aed86;
+    border: 2px solid #47ff59;
   }
   .drumset .tom1-pad::before {
     content: "tom 1";
@@ -717,7 +719,7 @@ input[type="number"] {
     -ms-grid-column: 5;
     -ms-grid-column-span: 2;
     grid-area: 2/5/3/7;
-    border: 2px solid #f3b56f;
+    border: 2px solid #ffae51;
   }
   .drumset .floor-tom-pad::before {
     content: "floor tom";
@@ -728,7 +730,7 @@ input[type="number"] {
     -ms-grid-column: 5;
     -ms-grid-column-span: 2;
     grid-area: 3/5/4/7;
-    border: 2px solid #ef5959;
+    border: 2px solid #fb2b2b;
   }
   .drumset .kick-pad::before {
     content: "kick";
