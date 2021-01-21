@@ -1,38 +1,38 @@
 {
   "files": {
-    "main.css": "/Drooma/static/css/main.40b54d5b.chunk.css",
-    "main.js": "/Drooma/static/js/main.d26fe76f.chunk.js",
-    "main.js.map": "/Drooma/static/js/main.d26fe76f.chunk.js.map",
+    "main.css": "/Drooma/static/css/main.236c6c05.chunk.css",
+    "main.js": "/Drooma/static/js/main.f67bd86b.chunk.js",
+    "main.js.map": "/Drooma/static/js/main.f67bd86b.chunk.js.map",
     "runtime-main.js": "/Drooma/static/js/runtime-main.4bae86af.js",
     "runtime-main.js.map": "/Drooma/static/js/runtime-main.4bae86af.js.map",
     "static/js/2.334ab3dc.chunk.js": "/Drooma/static/js/2.334ab3dc.chunk.js",
     "static/js/2.334ab3dc.chunk.js.map": "/Drooma/static/js/2.334ab3dc.chunk.js.map",
     "index.html": "/Drooma/index.html",
-    "precache-manifest.c23024179831f5b4099102035eacf9d9.js": "/Drooma/precache-manifest.c23024179831f5b4099102035eacf9d9.js",
+    "precache-manifest.218a45cdc76ded44a09bc5e8bdea6884.js": "/Drooma/precache-manifest.218a45cdc76ded44a09bc5e8bdea6884.js",
     "service-worker.js": "/Drooma/service-worker.js",
-    "static/css/main.40b54d5b.chunk.css.map": "/Drooma/static/css/main.40b54d5b.chunk.css.map",
+    "static/css/main.236c6c05.chunk.css.map": "/Drooma/static/css/main.236c6c05.chunk.css.map",
     "static/js/2.334ab3dc.chunk.js.LICENSE.txt": "/Drooma/static/js/2.334ab3dc.chunk.js.LICENSE.txt",
     "static/media/crash.mp3": "/Drooma/static/media/crash.ec6de53a.mp3",
-    "static/media/crash.svg": "/Drooma/static/media/crash.3bbcb8cc.svg",
+    "static/media/crash.svg": "/Drooma/static/media/crash.684bed0a.svg",
     "static/media/floor.mp3": "/Drooma/static/media/floor.f42464d5.mp3",
-    "static/media/floor.svg": "/Drooma/static/media/floor.804a8ae7.svg",
+    "static/media/floor.svg": "/Drooma/static/media/floor.fe79c432.svg",
+    "static/media/hihat.svg": "/Drooma/static/media/hihat.260be78c.svg",
     "static/media/hihat.mp3": "/Drooma/static/media/hihat.89759442.mp3",
-    "static/media/hihat.svg": "/Drooma/static/media/hihat.e3bf3181.svg",
-    "static/media/kick.svg": "/Drooma/static/media/kick.10411342.svg",
     "static/media/kick.mp3": "/Drooma/static/media/kick.b89fc829.mp3",
+    "static/media/kick.svg": "/Drooma/static/media/kick.8a005b35.svg",
     "static/media/ride.mp3": "/Drooma/static/media/ride.a84b71de.mp3",
-    "static/media/ride.svg": "/Drooma/static/media/ride.c4127446.svg",
+    "static/media/ride.svg": "/Drooma/static/media/ride.8e4a4895.svg",
     "static/media/snare.mp3": "/Drooma/static/media/snare.dc80473c.mp3",
-    "static/media/snare.svg": "/Drooma/static/media/snare.b162425f.svg",
+    "static/media/snare.svg": "/Drooma/static/media/snare.965eda5d.svg",
     "static/media/tom1.mp3": "/Drooma/static/media/tom1.ae7a1b93.mp3",
-    "static/media/tom1.svg": "/Drooma/static/media/tom1.d3972c21.svg",
+    "static/media/tom1.svg": "/Drooma/static/media/tom1.e1c42499.svg",
     "static/media/tom2.mp3": "/Drooma/static/media/tom2.deb5c018.mp3",
-    "static/media/tom2.svg": "/Drooma/static/media/tom2.90e019d6.svg"
+    "static/media/tom2.svg": "/Drooma/static/media/tom2.e33e01e7.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.4bae86af.js",
     "static/js/2.334ab3dc.chunk.js",
-    "static/css/main.40b54d5b.chunk.css",
-    "static/js/main.d26fe76f.chunk.js"
+    "static/css/main.236c6c05.chunk.css",
+    "static/js/main.f67bd86b.chunk.js"
   ]
 }
