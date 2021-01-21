@@ -13,3 +13,8 @@ Performance at this moment is pretty decent but there is still some work to be d
 and some updates are probably about to come in nearest future.
 
 In this project is used: React (hooks), Sass, Web Audio API, MobX
+
+Drum pads were created with Figma.
+
+Drum sounds taken from here:
+https://www.musicradar.com/news/drums/1000-free-drum-samples
