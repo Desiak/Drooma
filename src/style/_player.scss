@@ -228,6 +228,25 @@ input[type="number"] {
   display: flex;
   justify-content: space-around;
   flex-basis: 12%;
+  position: relative;
+  --snare-color: rgb(137, 232, 253);
+  --kick-color: rgb(251, 43, 43);
+  --hihat-color: rgb(101, 121, 255);
+  --tom1-color: rgb(71, 255, 89);
+  --tom2-color: rgb(239, 242, 102);
+  --floor-color: rgb(255, 174, 81);
+  --crash-color: rgb(247, 94, 94);
+  --ride-color: rgb(234, 134, 251);
+  &::before {
+    content: "";
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    top: 50%;
+    pointer-events: none;
+  }
   .tile {
     padding: 5px 0;
     margin: 5px 20px;
@@ -265,11 +284,11 @@ input[type="number"] {
     background-color: $floor-tom-color;
   }
   .kick {
-    background-color: $kick-color;
+    background: $kick-color;
   }
   .empty {
     border: 2px solid rgb(96, 96, 96);
-    background: none;
+    background: rgb(51, 51, 51);
     transform: scale(0.9);
   }
 }

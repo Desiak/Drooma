@@ -10,6 +10,7 @@ function Player() {
   const [speed, setSpeed] = useState(80);
   const [beatScheduler, setBeatScheduler] = useState(null);
   const [blocksInMotion, setBlocksInMotion] = useState(null);
+  const [tracksDOM, setTracksDOM] = useState([]);
   const [tracks, setTracks] = useState({
     crash: [
       0,
@@ -285,11 +286,8 @@ function Player() {
     ],
   });
   const [tracksLength, setTracksLength] = useState(tracks.crash.length);
-  const drumset = document.querySelector(".drumset");
 
   //necessary in appending phantom track:
-  const motionTrack = document.querySelector(".motion");
-  const tracksContainer = document.querySelector(".tracks_container");
 
   let singleTrackName;
   let singleTrackValue;
@@ -298,7 +296,6 @@ function Player() {
   let indexOfCurrentNote = 0;
   let interval;
   const context = store.context;
-  const allTracks = [];
   let nextNoteTime = context.currentTime;
 
   //functions triggered in action menu:
@@ -342,7 +339,6 @@ function Player() {
         });
       }
       setTracks(emptyTracks);
-      renderSoundBlocks();
     }
   };
 
@@ -389,6 +385,8 @@ function Player() {
 
     //animate corresponding drumpad - only on larger devices:
     if (window.innerWidth > 720) {
+      const drumset = document.querySelector(".drumset");
+
       const drumPadSelector = drumset.querySelector(`.${singleTrackName}`);
 
       drumPadSelector.style.animation = `drumPadHighlight ${
@@ -401,6 +399,7 @@ function Player() {
   };
 
   function scheduler() {
+    //inny sposób na schedulling: po zagraniu dźwięku dodawanie go na koniec kolejki.
     interval = 60 / (speed * 4);
     setBeatScheduler(
       setInterval(() => {
@@ -444,6 +443,9 @@ function Player() {
   const appendPhantomTrack = () => {
     //its job is to prevent player from being empty when it starts animating tracks
     //so it looks like tracks are in infinite loop.
+    const motionTrack = document.querySelector(".motion");
+    const tracksContainer = document.querySelector(".tracks_container");
+
     const phantomTrackContainer = document.createElement("div");
     phantomTrackContainer.classList.add("phantom");
     const phantomTrack = motionTrack.cloneNode(true);
@@ -475,7 +477,7 @@ function Player() {
       }
     }
     setTracksLength(tracks.crash.length);
-    renderSoundBlocks();
+    renderTracks();
   };
 
   //functions triggered in player:
@@ -492,44 +494,42 @@ function Player() {
           tracks[track][indexOfClickedTile] = updatedValue;
         }
       }
-      renderSoundBlocks();
+      renderTracks();
     }
   };
 
   // functions triggered both in action menu and player:
-  const renderSoundBlocks = () => {
-    //display all soundblocks according to state value
-    const container = document.querySelector(".motion");
 
-    container.innerHTML = "";
+  const renderTracks = () => {
+    let arrayOfTracks = [];
     for (const track in tracks) {
-      const singleTrack = document.createElement("div");
-      singleTrack.classList.add("track", `${track}`);
-      tracks[track].forEach((tile) => {
-        let singleTile = document.createElement("div");
-        singleTile.id = `${track}-${index}`;
-        singleTile.classList.add("tile", `${track}`);
-        if (!tile) {
-          singleTile.classList.add(`empty`);
-        }
-        singleTile.addEventListener("click", (e) => {
-          onClickToggleActiveState(e);
-        });
-        singleTrack.appendChild(singleTile);
-        index++;
+      const currentTrack = (
+        <div className={`track ${track}`}>
+          {tracks[track].map((tile) => {
+            index++;
+            if (index === tracks.crash.length) {
+              index = 0;
+            }
+            return (
+              <div
+                className={`tile ${track} ${tile ? null : "empty"}`}
+                id={`${track}-${index - 1}`}
+                onClick={(e) => onClickToggleActiveState(e)}
+              ></div>
+            );
+          })}
+        </div>
+      );
 
-        if (index === tracks.crash.length) {
-          allTracks.push(singleTrack);
-          index = 0;
-        }
-      });
-      container.appendChild(singleTrack);
+      arrayOfTracks.push(currentTrack);
     }
+
+    setTracksDOM(arrayOfTracks);
   };
 
   useEffect(() => {
     //render all tracks when app loads
-    renderSoundBlocks();
+    renderTracks();
     prepareAudioBuffers("drumset1");
     const animatedBlocks = document.querySelector(".tracks_container");
     setBlocksInMotion(animatedBlocks);
@@ -539,22 +539,19 @@ function Player() {
     <div className="player-container">
       <div className="action-menu">
         <button className="btn play" onClick={(e) => Start(e)}>
-          <i className="fas fa-play"></i>
+          <span className="fas fa-play"></span>
         </button>
         <button className="btn pause" onClick={(e) => Pause(e)}>
-          <i className="fas fa-pause"></i>
+          <span className="fas fa-pause"></span>
         </button>
         <button className="btn clear" onClick={() => clearAllTracks()}>
-          <i className="fas fa-eraser"></i>
+          <span className="fas fa-eraser"></span>
         </button>
       </div>
       <div className="info-area">
         <div className="tracks-length">
-          <div
-            className="remove-beat"
-            onClick={() => modifyTracksLength(false)}
-          >
-            <i className="fas fa-minus"></i>
+          <div className="add-beat" onClick={() => modifyTracksLength(true)}>
+            <span className="fas fa-plus"></span>
           </div>
           <div className="length">
             <p className="length-value">{tracksLength}</p>
@@ -562,8 +559,11 @@ function Player() {
             <p>beats</p>
           </div>
 
-          <div className="add-beat" onClick={() => modifyTracksLength(true)}>
-            <i className="fas fa-plus"></i>
+          <div
+            className="remove-beat"
+            onClick={() => modifyTracksLength(false)}
+          >
+            <span className="fas fa-minus"></span>
           </div>
         </div>
         <div className="tempo">
@@ -609,11 +609,7 @@ function Player() {
             <div className="kick"></div>
           </div>
           <div className="tracks_container">
-            <div className="motion">
-              {
-                // here go all the tracks...
-              }
-            </div>
+            <div className="motion">{tracksDOM}</div>
           </div>
         </div>
       </Scrollbars>

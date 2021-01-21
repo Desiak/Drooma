@@ -370,6 +370,27 @@ input[type="number"] {
       justify-content: space-around;
   -ms-flex-preferred-size: 12%;
       flex-basis: 12%;
+  position: relative;
+  --snare-color: rgb(137, 232, 253);
+  --kick-color: rgb(251, 43, 43);
+  --hihat-color: rgb(101, 121, 255);
+  --tom1-color: rgb(71, 255, 89);
+  --tom2-color: rgb(239, 242, 102);
+  --floor-color: rgb(255, 174, 81);
+  --crash-color: rgb(247, 94, 94);
+  --ride-color: rgb(234, 134, 251);
+}
+
+.track::before {
+  content: "";
+  width: 100%;
+  height: 4px;
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  opacity: 0.5;
+  top: 50%;
+  pointer-events: none;
 }
 
 .track .tile {
@@ -419,12 +440,12 @@ input[type="number"] {
 }
 
 .track .kick {
-  background-color: #fb2b2b;
+  background: #fb2b2b;
 }
 
 .track .empty {
   border: 2px solid #606060;
-  background: none;
+  background: #333333;
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
 }
@@ -491,7 +512,7 @@ input[type="number"] {
 }
 
 .snare-pad {
-  left: 25%;
+  left: 30%;
   bottom: 25%;
   z-index: 1;
   width: 15%;
@@ -542,7 +563,7 @@ input[type="number"] {
 }
 
 .hihat-pad {
-  left: 10%;
+  left: 15%;
   bottom: 40%;
   z-index: 2;
   width: 15%;
