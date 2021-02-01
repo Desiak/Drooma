@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Drooma/static/css/main.236c6c05.chunk.css",
-    "main.js": "/Drooma/static/js/main.f67bd86b.chunk.js",
-    "main.js.map": "/Drooma/static/js/main.f67bd86b.chunk.js.map",
+    "main.js": "/Drooma/static/js/main.3df83359.chunk.js",
+    "main.js.map": "/Drooma/static/js/main.3df83359.chunk.js.map",
     "runtime-main.js": "/Drooma/static/js/runtime-main.4bae86af.js",
     "runtime-main.js.map": "/Drooma/static/js/runtime-main.4bae86af.js.map",
     "static/js/2.334ab3dc.chunk.js": "/Drooma/static/js/2.334ab3dc.chunk.js",
     "static/js/2.334ab3dc.chunk.js.map": "/Drooma/static/js/2.334ab3dc.chunk.js.map",
     "index.html": "/Drooma/index.html",
-    "precache-manifest.218a45cdc76ded44a09bc5e8bdea6884.js": "/Drooma/precache-manifest.218a45cdc76ded44a09bc5e8bdea6884.js",
+    "precache-manifest.d47ea933448cde62c036102319b38a18.js": "/Drooma/precache-manifest.d47ea933448cde62c036102319b38a18.js",
     "service-worker.js": "/Drooma/service-worker.js",
     "static/css/main.236c6c05.chunk.css.map": "/Drooma/static/css/main.236c6c05.chunk.css.map",
     "static/js/2.334ab3dc.chunk.js.LICENSE.txt": "/Drooma/static/js/2.334ab3dc.chunk.js.LICENSE.txt",
@@ -33,6 +33,6 @@
     "static/js/runtime-main.4bae86af.js",
     "static/js/2.334ab3dc.chunk.js",
     "static/css/main.236c6c05.chunk.css",
-    "static/js/main.f67bd86b.chunk.js"
+    "static/js/main.3df83359.chunk.js"
   ]
 }
